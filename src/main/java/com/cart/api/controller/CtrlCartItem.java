@@ -76,4 +76,23 @@ public class CtrlCartItem {
         String clientId = authentication.getName();
         return new ResponseEntity<>(svc.clearCart(clientId), HttpStatus.OK);
     }
+
+    /**
+     * Eliminar unidades específicas de un artículo del carrito (Resta de unidades)
+     * PUT /cart-item/{id}
+     */
+    @Operation(summary = "Restar unidades de un artículo",
+            description = "Resta la cantidad especificada del artículo. Si la cantidad restante es 0, se elimina el item.")
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateQuantity(
+            @PathVariable Integer id,
+            @RequestBody DtoCartItemIn in,
+            Authentication authentication) {
+
+        String clientId = authentication.getName();
+
+        // Llamamos al servicio con la cantidad que debe restarse
+        ApiResponse response = svc.updateCartItemQuantity(id, in.getQuantity(), clientId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

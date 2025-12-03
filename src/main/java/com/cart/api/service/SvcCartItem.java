@@ -37,4 +37,14 @@ public interface SvcCartItem {
      * @return ApiResponse con mensaje de confirmación
      */
     ApiResponse clearCart(String clientId);
+
+    /**
+     * Actualiza la cantidad de un item específico en el carrito
+     * @param cartItemId ID del item en la tabla cart_item
+     * @param newQuantity La nueva cantidad total deseada para este producto
+     * @param clientId ID del cliente obtenido del token JWT
+     * @return ApiResponse con mensaje de confirmación
+     */
+    ApiResponse updateCartItemQuantity(Integer cartItemId, Integer newQuantity, String clientId);
+
 }

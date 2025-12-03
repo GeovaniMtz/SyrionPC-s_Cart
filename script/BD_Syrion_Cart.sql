@@ -1,4 +1,4 @@
--- TABLA 1: category (Para catalogación de productos)
+-- TABLA 1: category
 CREATE TABLE category(
     category_id INT NOT NULL AUTO_INCREMENT,
     category VARCHAR(100) NOT NULL,
@@ -21,7 +21,7 @@ VALUES
   ('Modems', 'md', 0);
 
 ---
--- TABLA 2: product (La tabla principal del Microservicio Product)
+-- TABLA 2: product
 CREATE TABLE product (
     product_id INT NOT NULL AUTO_INCREMENT,
     gtin VARCHAR(13) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE product (
     CHECK (status IN (0,1))
 );
 
--- Tabla 'product_image' (asumiendo que es parte del Microservicio Product)
+-- Tabla 'product_image'
 CREATE TABLE product_image (
     product_image_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
@@ -51,37 +51,15 @@ CREATE TABLE product_image (
     CHECK (status IN (0,1))
 );
 
-DROP TABLE IF EXISTS category;
-
-CREATE TABLE category(
-  category_id INT NOT NULL AUTO_INCREMENT, 
-  category VARCHAR(100) NOT NULL,
-  tag VARCHAR(100) NOT NULL,
-  status TINYINT NOT NULL,
-  PRIMARY KEY (category_id), 
-  CHECK (status IN (0,1))
-);
-
-CREATE UNIQUE INDEX ux_category ON category(category);
-CREATE UNIQUE INDEX ux_tag ON category(tag);
-
-INSERT INTO category (category, tag, status)
-VALUES
-  ('Electrónica', 'ELEC', 1),
-  ('Ropa', 'CLOT', 1),
-  ('Hogar', 'HOME', 1),
-  ('Deportes', 'SPORT', 0);
-
-SELECT * FROM category;
-
-
+---
+-- TABLA 3: cart_item
 CREATE TABLE cart_item (
-    id INT NOT NULL AUTO_INCREMENT, 
+    id INT NOT NULL AUTO_INCREMENT,
     client_id VARCHAR(100) NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- << AÑADIR LA COMA AQUÍ
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 

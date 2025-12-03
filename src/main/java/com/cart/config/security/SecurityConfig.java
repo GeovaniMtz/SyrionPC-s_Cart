@@ -26,9 +26,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error", "/swagger-ui/**", "/v3/api-docs/**",
                                 "/actuator/info", "/actuator/health").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/cart-item").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/cart-item").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/cart-item/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/cart-item").hasAnyAuthority( "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/cart-item").hasAnyAuthority("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT, "/cart-item/**").hasAnyAuthority("CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE, "/cart-item/**").hasAnyAuthority("CUSTOMER")
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfig))

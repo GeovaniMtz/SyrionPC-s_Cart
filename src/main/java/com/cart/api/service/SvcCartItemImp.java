@@ -136,6 +136,40 @@ public class SvcCartItemImp implements SvcCartItem {
         }
     }
 
+    @Override
+    public ApiResponse updateCartItemQuantity(Integer cartItemId, Integer quantityToSubtract, String clientId) {
+
+        // Validar la cantidad a restar
+        if (quantityToSubtract == null || quantityToSubtract <= 0) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "La cantidad a restar debe ser al menos 1.");
+        }
+
+        // Buscar el item y validar que pertenezca al cliente
+        Optional<CartItem> itemOpt = repo.findById(cartItemId);
+
+        if (itemOpt.isEmpty() || !itemOpt.get().getClientId().equals(clientId)) {
+            throw new ApiException(HttpStatus.NOT_FOUND, "Item de carrito no encontrado o no pertenece al cliente");
+        }
+
+        CartItem itemToUpdate = itemOpt.get();
+        Integer existingQuantity = itemToUpdate.getQuantity();
+
+        // Calcular la nueva cantidad total (EXISTENTE - CANTIDAD_A_RESTAR)
+        Integer newTotalQuantity = existingQuantity - quantityToSubtract;
+
+        // Si el total es 0 o negativo, eliminamos el item (DELETE)
+        if (newTotalQuantity <= 0) {
+            repo.deleteById(cartItemId);
+            return new ApiResponse("Producto eliminado completamente del carrito.");
+        }
+
+        // Si la nueva cantidad es positiva, guardamos la actualización
+        itemToUpdate.setQuantity(newTotalQuantity);
+        repo.save(itemToUpdate);
+
+        return new ApiResponse("Se restaron " + quantityToSubtract + " unidades. Cantidad restante: " + newTotalQuantity);
+    }
+
     // Método auxiliar para obtener información de un producto desde la API Product
     private DtoProductInfo getProductInfo(Integer productId) {
         try {
@@ -153,7 +187,7 @@ public class SvcCartItemImp implements SvcCartItem {
 
             return productInfo;
         } catch (Exception e) {
-            // Captura las excepciones de RestTemplate (404, conexión, etc.)
+            // Captura las excepciones de RestTemplate
             throw new ApiException(HttpStatus.NOT_FOUND,
                     "El producto con ID " + productId + " no existe o el servicio de productos no está disponible: " + e.getMessage());
         }
