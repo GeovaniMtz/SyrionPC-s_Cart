@@ -1,4 +1,4 @@
-# Microservicio de Carrito
+# Microservicio de Carrito (cart)
 
 Este microservicio gestiona la lógica completa del carrito de compras, cumpliendo con el **Requerimiento 1 (Carrito de Compras)** del proyecto.
 
