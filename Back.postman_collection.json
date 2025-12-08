@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "90f8f4b3-9608-4463-b330-08046923db6f",
+		"_postman_id": "f4037c2a-4ef8-4ce3-ad44-e83e74049a23",
 		"name": "Back",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "42131197",
-		"_collection_link": "https://hommunity.postman.co/workspace/Hommunity-Workspace~ba740cfb-f8ce-4f7e-8afb-070914afbf8f/collection/42131197-90f8f4b3-9608-4463-b330-08046923db6f?action=share&source=collection_link&creator=42131197"
+		"_exporter_id": "42445546",
+		"_collection_link": "https://hommunity.postman.co/workspace/Hommunity-Workspace~ba740cfb-f8ce-4f7e-8afb-070914afbf8f/collection/42445546-f4037c2a-4ef8-4ce3-ad44-e83e74049a23?action=share&source=collection_link&creator=42445546"
 	},
 	"item": [
 		{
@@ -188,7 +188,98 @@
 					"response": []
 				},
 				{
+					"name": "CrearUsuario Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreUsuario\": \"Frank\",\n  \"correo\": \"Frank@example.com\",\n  \"contrasena\": \"MiPasswordSegura123\",\n  \"nombres\": \"Frank\",\n  \"apellidos\": \"Martinez\",\n  \"roles\": [\n    \"CUSTOMER\"\n  ],\n  \"estatus\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8081/usuario",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();",
+									"if (json.token) {",
+									"    pm.environment.set(\"jwt\", json.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreUsuario\": \"Frank@example.com\",\n  \"contrasena\": \"MiPasswordSegura123\"\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8081/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -253,7 +344,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{jwt}}",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJGcmFua0BleGFtcGxlLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJDVVNUT01FUiJ9XSwiaXNzIjoiaHR0cDovL1Z5NWFBb1hFaS8xUmNPT3NMMmQ0a0pZeHdqdXZ3dXlISjlla3NEWHdGeWV0d25ReVpBPT0iLCJzdWIiOiJGcmFuayIsImF1ZCI6Imh0dHA6Ly9WeTVhQW9YRWkvMVJjT09zTDJkNGtKWXh3anV2d3V5SEo5ZWtzRFh3RnlldHduUXlaQT09IiwiZXhwIjoxNzY1MDY4MTM3LCJpYXQiOjE3NjUwNjQ1Mzd9.DlnnSkxs52e3B1SeCV8MSEIUelFHWfEP57LQYCsgT9g",
 									"type": "string"
 								}
 							]
@@ -268,7 +359,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"product_id\": 4,\n    \"quantity\": 3\n\n}"
+							"raw": "{\n    \"product_id\": 4,\n    \"quantity\": 1\n\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8082/cart-item",
@@ -408,7 +499,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{jwt}}",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJGcmFua0BleGFtcGxlLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJDVVNUT01FUiJ9XSwiaXNzIjoiaHR0cDovL1Z5NWFBb1hFaS8xUmNPT3NMMmQ0a0pZeHdqdXZ3dXlISjlla3NEWHdGeWV0d25ReVpBPT0iLCJzdWIiOiJGcmFuayIsImF1ZCI6Imh0dHA6Ly9WeTVhQW9YRWkvMVJjT09zTDJkNGtKWXh3anV2d3V5SEo5ZWtzRFh3RnlldHduUXlaQT09IiwiZXhwIjoxNzY1MDcwMzM3LCJpYXQiOjE3NjUwNjY3Mzd9.pxlRNmx_Gwx53YB4ewRBURoeoxTfBmbrQpnGuIlduhY",
 									"type": "string"
 								}
 							]
@@ -582,6 +673,99 @@
 								"product",
 								"1",
 								"enable"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoice",
+			"item": [
+				{
+					"name": "CrearFactura",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJGcmFua0BleGFtcGxlLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJDVVNUT01FUiJ9XSwiaXNzIjoiaHR0cDovL1Z5NWFBb1hFaS8xUmNPT3NMMmQ0a0pZeHdqdXZ3dXlISjlla3NEWHdGeWV0d25ReVpBPT0iLCJzdWIiOiJGcmFuayIsImF1ZCI6Imh0dHA6Ly9WeTVhQW9YRWkvMVJjT09zTDJkNGtKWXh3anV2d3V5SEo5ZWtzRFh3RnlldHduUXlaQT09IiwiZXhwIjoxNzY1MDcwMzM3LCJpYXQiOjE3NjUwNjY3Mzd9.pxlRNmx_Gwx53YB4ewRBURoeoxTfBmbrQpnGuIlduhY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/invoice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerFactura",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJGcmFua0BleGFtcGxlLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJDVVNUT01FUiJ9XSwiaXNzIjoiaHR0cDovL1Z5NWFBb1hFaS8xUmNPT3NMMmQ0a0pZeHdqdXZ3dXlISjlla3NEWHdGeWV0d25ReVpBPT0iLCJzdWIiOiJGcmFuayIsImF1ZCI6Imh0dHA6Ly9WeTVhQW9YRWkvMVJjT09zTDJkNGtKWXh3anV2d3V5SEo5ZWtzRFh3RnlldHduUXlaQT09IiwiZXhwIjoxNzY1MDczMTkwLCJpYXQiOjE3NjUwNjk1OTB9.916ZZ--xeWjrMXQrvIO3f0JCG9SwcSskTnPVSTrbHTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/invoice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerFacturaDetalle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiZW1haWwiOiJGcmFua0BleGFtcGxlLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJDVVNUT01FUiJ9XSwiaXNzIjoiaHR0cDovL1Z5NWFBb1hFaS8xUmNPT3NMMmQ0a0pZeHdqdXZ3dXlISjlla3NEWHdGeWV0d25ReVpBPT0iLCJzdWIiOiJGcmFuayIsImF1ZCI6Imh0dHA6Ly9WeTVhQW9YRWkvMVJjT09zTDJkNGtKWXh3anV2d3V5SEo5ZWtzRFh3RnlldHduUXlaQT09IiwiZXhwIjoxNzY1MDczMTkwLCJpYXQiOjE3NjUwNjk1OTB9.916ZZ--xeWjrMXQrvIO3f0JCG9SwcSskTnPVSTrbHTk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/invoice/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"invoice",
+								"1"
 							]
 						}
 					},
